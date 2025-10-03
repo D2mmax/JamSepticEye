@@ -24,15 +24,14 @@ public class EyeController : MonoBehaviour
         input = new Vector2(x, y).normalized;
     }
 
-  void FixedUpdate()
-{
-    Vector2 targetVel = input * moveSpeed;
+    void FixedUpdate()
+    {
+        Vector2 targetVel = input * moveSpeed;
 
-    // If moving, use acceleration; if not, use drag for slowing down
-    float lerpFactor = (input.magnitude > 0.1f) ? acceleration : drag;
+        // If moving, use acceleration; if not, use drag for slowing down
+        float lerpFactor = (input.magnitude > 0.1f) ? acceleration : drag;
 
-    // Ghosty easing: exponential-style interpolation
-    rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, targetVel, 1f - Mathf.Exp(-lerpFactor * Time.fixedDeltaTime));
-}
-
+        // Ghosty easing: exponential-style interpolation
+        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, targetVel, 1f - Mathf.Exp(-lerpFactor * Time.fixedDeltaTime));
+    }
 }

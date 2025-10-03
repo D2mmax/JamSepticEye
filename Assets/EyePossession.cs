@@ -2,23 +2,20 @@ using UnityEngine;
 using System.Collections;
 
 public class EyePossession : MonoBehaviour
-
 {
-    
     private EyeController eyeController;
     private bool inRange = false;
     private PossessableEnemy targetEnemy;
     private Coroutine possessionRoutine;
     private CircleCollider2D eyeCollider;
     [Header("Hover settings")]
-    public float hoverAmplitude = 0.2f;      // vertical bob height
-    public float hoverFrequency = 2f;        // vertical bob speed
-    public float swayMultiplier = 0.3f;      // how much it sways based on host movement
-    public float swaySmoothTime = 0.1f;      // smoothing for sway motion
+    public float hoverAmplitude = 0.2f;
+    public float hoverFrequency = 2f;
+    public float swayMultiplier = 0.3f;
+    public float swaySmoothTime = 0.1f;
 
     private Vector3 hoverOffset;
     private Vector3 swayVelocity; 
-
 
     public float possessTime = 1f;
     private bool isPossessing = false;
@@ -27,12 +24,10 @@ public class EyePossession : MonoBehaviour
     public HealthBar hostHealthBar;
 
     public float possessionDrainRate = 10f; // health drained per second
-    
 
     void Awake()
     {
         eyeController = GetComponent<EyeController>();
-       
         eyeCollider = GetComponent<CircleCollider2D>(); // grab the collider
     }
 
@@ -41,29 +36,24 @@ public class EyePossession : MonoBehaviour
         if (inRange && targetEnemy != null && !isPossessing)
         {
             if (Input.GetKeyDown(KeyCode.E))
-            {
                 possessionRoutine = StartCoroutine(PossessEnemyRoutine(targetEnemy));
-            }
             if (Input.GetKeyUp(KeyCode.E) && possessionRoutine != null)
             {
                 StopCoroutine(possessionRoutine);
                 possessionRoutine = null;
             }
         }
+
         if (isPossessing && targetEnemy != null)
         {
-        // Drain host health over time
-        Health hostHealth = targetEnemy.GetComponent<Health>();
-        if (hostHealth != null)
-        {
-            hostHealth.TakeDamage(possessionDrainRate * Time.deltaTime);
-
-            // If host dies, auto-release
-            if (hostHealth.currentHealth <= 0)
+            Health hostHealth = targetEnemy.GetComponent<Health>();
+            if (hostHealth != null)
             {
-                Release();
+                hostHealth.TakeDamage(possessionDrainRate * Time.deltaTime);
+
+                if (hostHealth.currentHealth <= 0)
+                    Release();
             }
-        }
         }
     }
 
@@ -77,29 +67,27 @@ public class EyePossession : MonoBehaviour
             yield return null;
         }
 
-        // Success!
         Possess(enemy);
     }
 
     private void Possess(PossessableEnemy enemy)
-{
-    isPossessing = true;
-    eyeController.enabled = false;
-    if (eyeCollider != null) eyeCollider.enabled = false;
+    {
+        isPossessing = true;
+        eyeController.enabled = false;
+        if (eyeCollider != null) eyeCollider.enabled = false;
 
-    targetEnemy = enemy;
-    transform.position = enemy.shoulderAnchor.position;
+        targetEnemy = enemy;
+        transform.position = enemy.shoulderAnchor.position;
 
-    enemy.OnPossessed();
+        enemy.OnPossessed();
 
-    // Set host health bar to enemy's health
-    hostHealthBar.gameObject.SetActive(true);
-    hostHealthBar.SetTarget(enemy.GetComponent<Health>());
+        // Set host health bar to enemy's health
+        hostHealthBar.gameObject.SetActive(true);
+        hostHealthBar.SetTarget(enemy.GetComponent<Health>());
 
-    // Camera follow
-    Camera.main.GetComponent<CameraFollow>().SetTarget(enemy.transform);
-}
-
+        // Camera follow
+        Camera.main.GetComponent<CameraFollow>().SetTarget(enemy.transform);
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -120,52 +108,54 @@ public class EyePossession : MonoBehaviour
             targetEnemy = null;
         }
     }
+
     public void Release()
-{
-    if (!isPossessing) return;
-
-    isPossessing = false;
-    eyeController.enabled = true;
-    if (eyeCollider != null) eyeCollider.enabled = true;
-    transform.SetParent(null);
-
-    if (targetEnemy != null)
-        targetEnemy.OnReleased();
-
-    // Hide host health bar
-    hostHealthBar.gameObject.SetActive(false);
-
-    // Camera back to eye
-    Camera.main.GetComponent<CameraFollow>().SetTarget(this.transform);
-}
-void LateUpdate()
-{
-    if (isPossessing && targetEnemy != null)
     {
-        Rigidbody2D hostRb = targetEnemy.GetComponent<Rigidbody2D>();
+        if (!isPossessing) return;
 
-        // Base position: shoulder
-        Vector3 basePos = targetEnemy.shoulderAnchor.position;
+        isPossessing = false;
+        eyeController.enabled = true;
+        if (eyeCollider != null) eyeCollider.enabled = true;
+        transform.SetParent(null);
 
-        // Vertical sinusoidal hover
-        float hoverY = Mathf.Sin(Time.time * hoverFrequency) * hoverAmplitude;
+        if (targetEnemy != null)
+            targetEnemy.OnReleased();
 
-        // Horizontal + vertical sway based on host linearVelocity
-        Vector2 hostVel = hostRb.linearVelocity;
-        Vector3 targetSway = new Vector3(
-            hostVel.x * swayMultiplier,   // sway right/left
-            hostVel.y * swayMultiplier,   // sway up/down
-            0
-        );
+        // Hide host health bar
+        hostHealthBar.gameObject.SetActive(false);
 
-        // Smoothly interpolate sway
-        Vector3 smoothSway = Vector3.SmoothDamp(hoverOffset, targetSway, ref swayVelocity, swaySmoothTime);
-
-        // Combine hover + sway
-        hoverOffset = new Vector3(smoothSway.x, smoothSway.y + hoverY, 0);
-
-        // Apply final position
-        transform.position = basePos + hoverOffset;
+        // Camera back to eye
+        Camera.main.GetComponent<CameraFollow>().SetTarget(this.transform);
     }
-}
+
+    void LateUpdate()
+    {
+        if (isPossessing && targetEnemy != null)
+        {
+            Rigidbody2D hostRb = targetEnemy.GetComponent<Rigidbody2D>();
+
+            // Base position: shoulder
+            Vector3 basePos = targetEnemy.shoulderAnchor.position;
+
+            // Vertical sinusoidal hover
+            float hoverY = Mathf.Sin(Time.time * hoverFrequency) * hoverAmplitude;
+
+            // Horizontal + vertical sway based on host linearVelocity
+            Vector2 hostVel = hostRb.linearVelocity;
+            Vector3 targetSway = new Vector3(
+                hostVel.x * swayMultiplier,   // sway right/left
+                hostVel.y * swayMultiplier,   // sway up/down
+                0
+            );
+
+            // Smoothly interpolate sway
+            Vector3 smoothSway = Vector3.SmoothDamp(hoverOffset, targetSway, ref swayVelocity, swaySmoothTime);
+
+            // Combine hover + sway
+            hoverOffset = new Vector3(smoothSway.x, smoothSway.y + hoverY, 0);
+
+            // Apply final position
+            transform.position = basePos + hoverOffset;
+        }
+    }
 }
