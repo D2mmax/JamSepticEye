@@ -22,6 +22,11 @@ public class EyePossession : MonoBehaviour
 
     public float possessTime = 1f;
     private bool isPossessing = false;
+    public Health eyeHealth;
+    public HealthBar EyeHealthBar;
+    public HealthBar hostHealthBar;
+
+    public float possessionDrainRate = 10f; // health drained per second
     
 
     void Awake()
@@ -45,6 +50,21 @@ public class EyePossession : MonoBehaviour
                 possessionRoutine = null;
             }
         }
+        if (isPossessing && targetEnemy != null)
+        {
+        // Drain host health over time
+        Health hostHealth = targetEnemy.GetComponent<Health>();
+        if (hostHealth != null)
+        {
+            hostHealth.TakeDamage(possessionDrainRate * Time.deltaTime);
+
+            // If host dies, auto-release
+            if (hostHealth.currentHealth <= 0)
+            {
+                Release();
+            }
+        }
+        }
     }
 
     private IEnumerator PossessEnemyRoutine(PossessableEnemy enemy)
@@ -64,16 +84,20 @@ public class EyePossession : MonoBehaviour
     private void Possess(PossessableEnemy enemy)
 {
     isPossessing = true;
-    eyeController.enabled = false; // stop free movement
+    eyeController.enabled = false;
     if (eyeCollider != null) eyeCollider.enabled = false;
 
     targetEnemy = enemy;
-
-    // Snap immediately
     transform.position = enemy.shoulderAnchor.position;
-    transform.SetParent(enemy.shoulderAnchor); // optional
 
     enemy.OnPossessed();
+
+    // Set host health bar to enemy's health
+    hostHealthBar.gameObject.SetActive(true);
+    hostHealthBar.SetTarget(enemy.GetComponent<Health>());
+
+    // Camera follow
+    Camera.main.GetComponent<CameraFollow>().SetTarget(enemy.transform);
 }
 
 
@@ -104,8 +128,15 @@ public class EyePossession : MonoBehaviour
     eyeController.enabled = true;
     if (eyeCollider != null) eyeCollider.enabled = true;
     transform.SetParent(null);
+
     if (targetEnemy != null)
         targetEnemy.OnReleased();
+
+    // Hide host health bar
+    hostHealthBar.gameObject.SetActive(false);
+
+    // Camera back to eye
+    Camera.main.GetComponent<CameraFollow>().SetTarget(this.transform);
 }
 void LateUpdate()
 {
