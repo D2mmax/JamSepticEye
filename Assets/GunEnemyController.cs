@@ -1,14 +1,14 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class EnemyController : MonoBehaviour
+public class GunEnemyController : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed = 5f;
     public Transform groundCheckPoint;
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
-    public LayerMask horizontalCollisionLayer;
+    public LayerMask wallLayer;
     public float wallCheckDistance = 0.1f;
 
     [Header("Jump")]
@@ -17,19 +17,26 @@ public class EnemyController : MonoBehaviour
     public float jumpHoldForce = 3f;
     public float maxJumpHoldTime = 0.2f;
 
+    [Header("Shooting")]
+    public GameObject bulletPrefab;
+    public Transform firePoint;
+    public float bulletSpeed = 10f;
+
     private Rigidbody2D rb;
     private PossessableEnemy possessable;
-    private bool isGrounded;
-    private bool isTouchingWall;
+    private SpriteRenderer spriteRenderer;
 
     private int jumpCount = 0;
     private bool isJumping = false;
     private float jumpHoldTimer = 0f;
+    private bool isGrounded;
+    private bool isTouchingWall;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         possessable = GetComponent<PossessableEnemy>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -38,6 +45,8 @@ public class EnemyController : MonoBehaviour
 
         HandleMovement();
         HandleJump();
+        HandleShooting();
+        HandleFlipping();
         HandleInteract();
     }
 
@@ -50,7 +59,6 @@ public class EnemyController : MonoBehaviour
     private void HandleMovement()
     {
         float move = Input.GetAxisRaw("Horizontal");
-
         if ((move > 0 && isTouchingWall) || (move < 0 && isTouchingWall))
             move = 0f;
 
@@ -61,7 +69,6 @@ public class EnemyController : MonoBehaviour
 
     private void HandleJump()
     {
-        // Start jump
         if (Input.GetButtonDown("Jump") && jumpCount < maxJumpCount)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
@@ -71,7 +78,6 @@ public class EnemyController : MonoBehaviour
             jumpHoldTimer = 0f;
         }
 
-        // Variable jump while holding
         if (isJumping && Input.GetButton("Jump") && jumpHoldTimer < maxJumpHoldTime)
         {
             rb.AddForce(Vector2.up * jumpHoldForce * Time.fixedDeltaTime, ForceMode2D.Impulse);
@@ -81,11 +87,41 @@ public class EnemyController : MonoBehaviour
         if (Input.GetButtonUp("Jump"))
             isJumping = false;
 
-        // Reset jump count when grounded
         if (isGrounded && rb.linearVelocity.y <= 0f)
         {
             jumpCount = 0;
             isJumping = false;
+        }
+    }
+
+    private void HandleShooting()
+    {
+        if (Input.GetMouseButtonDown(0) && bulletPrefab != null && firePoint != null)
+        {
+            Vector3 mouseWorld3D = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mouseWorld = new Vector2(mouseWorld3D.x, mouseWorld3D.y);
+            Vector2 direction = (mouseWorld - (Vector2)firePoint.position).normalized;
+
+            GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+            Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
+            bulletRb.linearVelocity = direction * bulletSpeed;
+        }
+    }
+
+    private void HandleFlipping()
+    {
+        if (spriteRenderer == null) return;
+
+        float moveX = Input.GetAxisRaw("Horizontal");
+
+        if (Mathf.Abs(moveX) > 0.1f)
+        {
+            spriteRenderer.flipX = moveX > 0f; // movement flip
+        }
+        else
+        {
+            Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            spriteRenderer.flipX = mouseWorld.x > transform.position.x; // mouse aim flip
         }
     }
 
@@ -98,10 +134,10 @@ public class EnemyController : MonoBehaviour
     private void CheckWall()
     {
         float dir = Input.GetAxisRaw("Horizontal");
-        if (dir > 0f)
-            isTouchingWall = Physics2D.Raycast(transform.position, Vector2.right, wallCheckDistance, horizontalCollisionLayer);
-        else if (dir < 0f)
-            isTouchingWall = Physics2D.Raycast(transform.position, Vector2.left, wallCheckDistance, horizontalCollisionLayer);
+        if (dir > 0)
+            isTouchingWall = Physics2D.Raycast(transform.position, Vector2.right, wallCheckDistance, wallLayer);
+        else if (dir < 0)
+            isTouchingWall = Physics2D.Raycast(transform.position, Vector2.left, wallCheckDistance, wallLayer);
         else
             isTouchingWall = false;
     }
@@ -113,7 +149,6 @@ public class EnemyController : MonoBehaviour
             Vector2 checkPos = (Vector2)transform.position + new Vector2(Mathf.Sign(transform.localScale.x) * 1f, 0f);
             float radius = 0.5f;
             Collider2D hit = Physics2D.OverlapCircle(checkPos, radius, LayerMask.GetMask("Interactable"));
-
             if (hit != null)
             {
                 Door door = hit.GetComponent<Door>();

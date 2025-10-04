@@ -121,7 +121,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 7
-  jumpForce: 7
   groundCheckPoint: {fileID: 7644099068612418010}
   groundCheckRadius: 0.2
   groundLayer:
@@ -131,6 +130,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 72
   wallCheckDistance: 0.75
+  jumpForce: 7
+  maxJumpCount: 1
+  jumpHoldForce: 3
+  maxJumpHoldTime: 0.2
 --- !u!50 &6927279500991592543
 Rigidbody2D:
   serializedVersion: 5
