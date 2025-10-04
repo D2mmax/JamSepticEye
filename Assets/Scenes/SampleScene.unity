@@ -5706,6 +5706,10 @@ PrefabInstance:
       propertyPath: m_BodyType
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5774876894321645893, guid: 84799f12922e5a94bb6a6e4c5ed245f4, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: e136b91eacba80a4d9e0a1c4d63145a4, type: 2}
     - target: {fileID: 8052257059002519529, guid: 84799f12922e5a94bb6a6e4c5ed245f4, type: 3}
       propertyPath: drag
       value: 4
@@ -5720,15 +5724,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8217223978005090592, guid: 84799f12922e5a94bb6a6e4c5ed245f4, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8217223978005090592, guid: 84799f12922e5a94bb6a6e4c5ed245f4, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8217223978005090592, guid: 84799f12922e5a94bb6a6e4c5ed245f4, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8217223978005090592, guid: 84799f12922e5a94bb6a6e4c5ed245f4, type: 3}
       propertyPath: m_LocalPosition.x
