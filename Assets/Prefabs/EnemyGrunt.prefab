@@ -126,7 +126,11 @@ MonoBehaviour:
   groundCheckRadius: 0.2
   groundLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 72
+  horizontalCollisionLayer:
+    serializedVersion: 2
+    m_Bits: 72
+  wallCheckDistance: 0.75
 --- !u!50 &6927279500991592543
 Rigidbody2D:
   serializedVersion: 5

@@ -90,24 +90,30 @@ public class EyePossession : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
-    {
-        PossessableEnemy enemy = collision.GetComponentInParent<PossessableEnemy>();
-        if (enemy != null)
-        {
-            inRange = true;
-            targetEnemy = enemy;
-        }
-    }
+{
+    // Ignore all new enemies if already possessing
+    if (isPossessing) return;
 
-    private void OnTriggerExit2D(Collider2D collision)
+    PossessableEnemy enemy = collision.GetComponentInParent<PossessableEnemy>();
+    if (enemy != null)
     {
-        PossessableEnemy enemy = collision.GetComponentInParent<PossessableEnemy>();
-        if (enemy == targetEnemy)
-        {
-            inRange = false;
-            targetEnemy = null;
-        }
+        inRange = true;
+        targetEnemy = enemy;
     }
+}
+
+private void OnTriggerExit2D(Collider2D collision)
+{
+    // Ignore if already possessing
+    if (isPossessing) return;
+
+    PossessableEnemy enemy = collision.GetComponentInParent<PossessableEnemy>();
+    if (enemy == targetEnemy)
+    {
+        inRange = false;
+        targetEnemy = null;
+    }
+}
 
     public void Release()
     {
