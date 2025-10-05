@@ -43,20 +43,4 @@ public class SimpleSceneManager : MonoBehaviour
     {
         SceneManager.LoadScene(buildIndex);
     }
-
-    /// <summary>
-    /// Pauses the game by freezing time.
-    /// </summary>
-    public void PauseScene()
-    {
-        Time.timeScale = 0f;
-    }
-
-    /// <summary>
-    /// Unpauses the game by resuming time.
-    /// </summary>
-    public void UnpauseScene()
-    {
-        Time.timeScale = 1f;
-    }
 }
