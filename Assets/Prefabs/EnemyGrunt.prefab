@@ -32,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 13.01, y: -7.07, z: 0}
-  m_LocalScale: {x: 1, y: 1.9819777, z: 1}
+  m_LocalScale: {x: 1, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8399784295763607796}
@@ -234,7 +234,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8399784295763607796}
   - component: {fileID: 7851640810680809726}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: PossessionZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
