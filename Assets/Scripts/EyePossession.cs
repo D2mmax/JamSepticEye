@@ -101,6 +101,10 @@ public class EyePossession : MonoBehaviour
 
         Possess(enemy);
     }
+    public bool IsPossessingEnemy(GameObject enemy)
+{
+    return isPossessing && targetEnemy != null && targetEnemy.gameObject == enemy;
+}
 
     private void Possess(PossessableEnemy enemy)
     {

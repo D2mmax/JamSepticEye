@@ -36,14 +36,15 @@ public class Health : MonoBehaviour
     public float NormalizedHealth => currentHealth / maxHealth;
 
     public void DetachEye()
+{
+    // Only detach if eyePossession exists and it is possessing this exact enemy
+    if (eyePossession != null && eyePossession.IsPossessing() && eyePossession.IsPossessingEnemy(this.gameObject))
     {
-        if (eyePossession != null && eyePossession.IsPossessing())
-        {
-            // Detach the eye so it won't be affected by enemy's inactive state
-            eyePossession.transform.SetParent(null);
+        // Detach the eye so it won't be affected by enemy's inactive state
+        eyePossession.transform.SetParent(null);
 
-            // Stop possessing this enemy
-            eyePossession.Release();
-        }
+        // Stop possessing this enemy
+        eyePossession.Release();
     }
+}
 }
