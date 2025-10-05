@@ -7,7 +7,7 @@ public class EyePossession : MonoBehaviour
     private bool inRange = false;
     private PossessableEnemy targetEnemy;
     private Coroutine possessionRoutine;
-    private CircleCollider2D eyeCollider;
+    private CapsuleCollider2D eyeCollider;
     [Header("Hover settings")]
     public float hoverAmplitude = 0.2f;
     public float hoverFrequency = 2f;
@@ -28,7 +28,7 @@ public class EyePossession : MonoBehaviour
     void Awake()
     {
         eyeController = GetComponent<EyeController>();
-        eyeCollider = GetComponent<CircleCollider2D>(); // grab the collider
+        eyeCollider = GetComponent<CapsuleCollider2D>(); // grab the collider
     }
 
     void Update()
@@ -71,63 +71,87 @@ public class EyePossession : MonoBehaviour
     }
 
     private void Possess(PossessableEnemy enemy)
-    {
-        isPossessing = true;
-        eyeController.enabled = false;
-        if (eyeCollider != null) eyeCollider.enabled = false;
+{
+    isPossessing = true;
+    eyeController.enabled = false;
 
-        targetEnemy = enemy;
-        transform.position = enemy.shoulderAnchor.position;
+    // Disable collisions if needed
+    if (eyeCollider != null)
+        eyeCollider.enabled = false;
 
-        enemy.OnPossessed();
+    // Set rendering order above the host
+    SpriteRenderer sr = GetComponent<SpriteRenderer>();
+    if (sr != null)
+        sr.sortingOrder = 1; // on top of enemy
 
-        // Set host health bar to enemy's health
-        hostHealthBar.gameObject.SetActive(true);
-        hostHealthBar.SetTarget(enemy.GetComponent<Health>());
+    // Change enemy tag to player
+    enemy.gameObject.tag = "Player";
 
-        // Camera follow
-        Camera.main.GetComponent<CameraFollow>().SetTarget(enemy.transform);
-    }
+    targetEnemy = enemy;
+    transform.position = enemy.shoulderAnchor.position;
+
+    enemy.OnPossessed();
+
+    // Camera follow & health bar setup
+    hostHealthBar.gameObject.SetActive(true);
+    hostHealthBar.SetTarget(enemy.GetComponent<Health>());
+    Camera.main.GetComponent<CameraFollow>().SetTarget(enemy.transform);
+}
 
     private void OnTriggerEnter2D(Collider2D collision)
-    {
-        PossessableEnemy enemy = collision.GetComponentInParent<PossessableEnemy>();
-        if (enemy != null)
-        {
-            inRange = true;
-            targetEnemy = enemy;
-        }
-    }
+{
+    // Ignore all new enemies if already possessing
+    if (isPossessing) return;
 
-    private void OnTriggerExit2D(Collider2D collision)
+    PossessableEnemy enemy = collision.GetComponentInParent<PossessableEnemy>();
+    if (enemy != null)
     {
-        PossessableEnemy enemy = collision.GetComponentInParent<PossessableEnemy>();
-        if (enemy == targetEnemy)
-        {
-            inRange = false;
-            targetEnemy = null;
-        }
+        inRange = true;
+        targetEnemy = enemy;
     }
+}
+
+private void OnTriggerExit2D(Collider2D collision)
+{
+    // Ignore if already possessing
+    if (isPossessing) return;
+
+    PossessableEnemy enemy = collision.GetComponentInParent<PossessableEnemy>();
+    if (enemy == targetEnemy)
+    {
+        inRange = false;
+        targetEnemy = null;
+    }
+}
 
     public void Release()
-    {
-        if (!isPossessing) return;
+{
+    if (!isPossessing) return;
 
-        isPossessing = false;
-        eyeController.enabled = true;
-        if (eyeCollider != null) eyeCollider.enabled = true;
-        transform.SetParent(null);
+    isPossessing = false;
+    eyeController.enabled = true;
 
-        if (targetEnemy != null)
-            targetEnemy.OnReleased();
+    if (eyeCollider != null)
+        eyeCollider.enabled = true;
 
-        // Hide host health bar
-        hostHealthBar.gameObject.SetActive(false);
+    // Reset rendering order
+    SpriteRenderer sr = GetComponent<SpriteRenderer>();
+    if (sr != null)
+        sr.sortingOrder = 0; // back to default
 
-        // Camera back to eye
-        Camera.main.GetComponent<CameraFollow>().SetTarget(this.transform);
-    }
+    // Reset enemy tag
+    if (targetEnemy != null)
+        targetEnemy.gameObject.tag = "Enemy";
 
+    transform.SetParent(null);
+
+    if (targetEnemy != null)
+        targetEnemy.OnReleased();
+
+    hostHealthBar.gameObject.SetActive(false);
+
+    Camera.main.GetComponent<CameraFollow>().SetTarget(this.transform);
+}
     void LateUpdate()
     {
         if (isPossessing && targetEnemy != null)
