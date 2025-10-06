@@ -1,0 +1,585 @@
+fileFormatVersion: 2
+guid: 64456af4628e7e8428940561f9e03227
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4226039241535633273
+    second: JSPEnemyWalk_0
+  - first:
+      213: 5417436323515686634
+    second: JSPEnemyWalk_1
+  - first:
+      213: 8428065830990429025
+    second: JSPEnemyWalk_2
+  - first:
+      213: -8335406735631338196
+    second: JSPEnemyWalk_3
+  - first:
+      213: -2726091861504128012
+    second: JSPEnemyWalk_4
+  - first:
+      213: -7784009805151480998
+    second: JSPEnemyWalk_5
+  - first:
+      213: -2498393047943555787
+    second: JSPEnemyWalk_6
+  - first:
+      213: -2062935498514788512
+    second: JSPEnemyWalk_7
+  - first:
+      213: -546556799152112416
+    second: JSPEnemyWalk_8
+  - first:
+      213: -6657716921597215434
+    second: JSPEnemyWalk_9
+  - first:
+      213: -3180250294944774439
+    second: JSPEnemyWalk_10
+  - first:
+      213: -453853468281248020
+    second: JSPEnemyWalk_11
+  - first:
+      213: -8917286402940522869
+    second: JSPEnemyWalk_12
+  - first:
+      213: 900581483922786345
+    second: JSPEnemyWalk_13
+  - first:
+      213: -7925204020893537288
+    second: JSPEnemyWalk_14
+  - first:
+      213: 691017010013738175
+    second: JSPEnemyWalk_15
+  - first:
+      213: -8403932106051837119
+    second: JSPEnemyWalk_16
+  - first:
+      213: 2524687492107947400
+    second: JSPEnemyWalk_17
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: JSPEnemyWalk_0
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 0
+        width: 69
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 977b796bc48e5aa30800000000000000
+      internalID: 4226039241535633273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JSPEnemyWalk_1
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 0
+        width: 65
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aee537822a99e2b40800000000000000
+      internalID: 5417436323515686634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JSPEnemyWalk_2
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 0
+        width: 47
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16bbacf283186f470800000000000000
+      internalID: 8428065830990429025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JSPEnemyWalk_3
+      rect:
+        serializedVersion: 2
+        x: 258
+        y: 0
+        width: 48
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c25bb40acbfa25c80800000000000000
+      internalID: -8335406735631338196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JSPEnemyWalk_4
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 0
+        width: 71
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4fb86f935e9fa2ad0800000000000000
+      internalID: -2726091861504128012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JSPEnemyWalk_5
+      rect:
+        serializedVersion: 2
+        x: 415
+        y: 0
+        width: 60
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a53d9cbd254a9f390800000000000000
+      internalID: -7784009805151480998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JSPEnemyWalk_6
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 0
+        width: 50
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 535d40c82cce35dd0800000000000000
+      internalID: -2498393047943555787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JSPEnemyWalk_7
+      rect:
+        serializedVersion: 2
+        x: 573
+        y: 0
+        width: 51
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06f8b70181bfe53e0800000000000000
+      internalID: -2062935498514788512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JSPEnemyWalk_8
+      rect:
+        serializedVersion: 2
+        x: 655
+        y: 0
+        width: 55
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ecb6f8ac7d3a68f0800000000000000
+      internalID: -546556799152112416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JSPEnemyWalk_9
+      rect:
+        serializedVersion: 2
+        x: 729
+        y: 0
+        width: 63
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63d3711ebb90b93a0800000000000000
+      internalID: -6657716921597215434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JSPEnemyWalk_10
+      rect:
+        serializedVersion: 2
+        x: 815
+        y: 0
+        width: 65
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d64cf8d43b7dd3d0800000000000000
+      internalID: -3180250294944774439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JSPEnemyWalk_11
+      rect:
+        serializedVersion: 2
+        x: 898
+        y: 0
+        width: 48
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce6640bdca693b9f0800000000000000
+      internalID: -453853468281248020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JSPEnemyWalk_12
+      rect:
+        serializedVersion: 2
+        x: 963
+        y: 0
+        width: 72
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8e2f48234f6f3480800000000000000
+      internalID: -8917286402940522869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JSPEnemyWalk_13
+      rect:
+        serializedVersion: 2
+        x: 1055
+        y: 0
+        width: 60
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 928038096128f7c00800000000000000
+      internalID: 900581483922786345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JSPEnemyWalk_14
+      rect:
+        serializedVersion: 2
+        x: 1140
+        y: 0
+        width: 50
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8fba42abee4040290800000000000000
+      internalID: -7925204020893537288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JSPEnemyWalk_15
+      rect:
+        serializedVersion: 2
+        x: 1215
+        y: 0
+        width: 56
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb41f973f4cf69900800000000000000
+      internalID: 691017010013738175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JSPEnemyWalk_16
+      rect:
+        serializedVersion: 2
+        x: 1289
+        y: 0
+        width: 63
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 143a746864c3f5b80800000000000000
+      internalID: -8403932106051837119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JSPEnemyWalk_17
+      rect:
+        serializedVersion: 2
+        x: 1364
+        y: 0
+        width: 69
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88d47ffc5ed790320800000000000000
+      internalID: 2524687492107947400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      JSPEnemyWalk_0: 4226039241535633273
+      JSPEnemyWalk_1: 5417436323515686634
+      JSPEnemyWalk_10: -3180250294944774439
+      JSPEnemyWalk_11: -453853468281248020
+      JSPEnemyWalk_12: -8917286402940522869
+      JSPEnemyWalk_13: 900581483922786345
+      JSPEnemyWalk_14: -7925204020893537288
+      JSPEnemyWalk_15: 691017010013738175
+      JSPEnemyWalk_16: -8403932106051837119
+      JSPEnemyWalk_17: 2524687492107947400
+      JSPEnemyWalk_2: 8428065830990429025
+      JSPEnemyWalk_3: -8335406735631338196
+      JSPEnemyWalk_4: -2726091861504128012
+      JSPEnemyWalk_5: -7784009805151480998
+      JSPEnemyWalk_6: -2498393047943555787
+      JSPEnemyWalk_7: -2062935498514788512
+      JSPEnemyWalk_8: -546556799152112416
+      JSPEnemyWalk_9: -6657716921597215434
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 [RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class PatrolWithTriggers : MonoBehaviour
 {
     [Header("Movement")]
@@ -9,11 +10,11 @@ public class PatrolWithTriggers : MonoBehaviour
 
     [Header("Patrol Points")]
     public Transform[] patrolPoints;
-    private int currentPointIndex = 0;
+    public int currentPointIndex = 0;
     private bool waiting = false;
 
     [Header("Detection")]
-    public Collider2D detectionZone; // assign large trigger in inspector
+    public Collider2D detectionZone;
     public string playerTag = "Player";
     public float minDistance = 1.5f;
 
@@ -24,6 +25,7 @@ public class PatrolWithTriggers : MonoBehaviour
     public float fireRate = 1f;
 
     private SpriteRenderer sr;
+    private Rigidbody2D rb;
     private Transform player;
     private bool chasingPlayer = false;
     private float fireCooldown = 0f;
@@ -31,6 +33,7 @@ public class PatrolWithTriggers : MonoBehaviour
     void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
@@ -53,13 +56,18 @@ public class PatrolWithTriggers : MonoBehaviour
     {
         float dirX = player.position.x - transform.position.x;
 
-        // Stop approaching if too close
-        float moveDir = Mathf.Sign(dirX);
+        // Only move if too far from player
+        float moveDir = 0f;
         if (Mathf.Abs(dirX) > minDistance)
-            transform.position += new Vector3(moveDir * moveSpeed * Time.deltaTime, 0, 0);
+            moveDir = Mathf.Sign(dirX);
 
-        // Flip based on movement direction
-        if (Mathf.Abs(dirX) > 0.01f)
+        // Apply velocity instead of transform
+        Vector2 vel = rb.linearVelocity;
+        vel.x = moveDir * moveSpeed;
+        rb.linearVelocity = vel;
+
+        // Flip sprite based on direction
+        if (Mathf.Abs(moveDir) > 0.01f)
             sr.flipX = moveDir > 0;
     }
 
@@ -67,12 +75,11 @@ public class PatrolWithTriggers : MonoBehaviour
     {
         if (fireCooldown > 0f || player == null || bulletPrefab == null || firePoint == null) return;
 
-        // Shoot towards player
         Vector2 dir = (player.position - firePoint.position).normalized;
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
-        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-        if (rb != null)
-            rb.linearVelocity = dir * bulletSpeed;
+        Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
+        if (bulletRb != null)
+            bulletRb.linearVelocity = dir * bulletSpeed;
 
         fireCooldown = fireRate;
     }
@@ -83,12 +90,18 @@ public class PatrolWithTriggers : MonoBehaviour
 
         Transform target = patrolPoints[currentPointIndex];
         float dirX = target.position.x - transform.position.x;
-        float moveDir = Mathf.Sign(dirX);
+        float moveDir = 0f;
 
-        transform.position += new Vector3(moveDir * moveSpeed * Time.deltaTime, 0, 0);
-
-        // Flip sprite based on movement direction
         if (Mathf.Abs(dirX) > 0.01f)
+            moveDir = Mathf.Sign(dirX);
+
+        // Use Rigidbody velocity
+        Vector2 vel = rb.linearVelocity;
+        vel.x = moveDir * moveSpeed;
+        rb.linearVelocity = vel;
+
+        // Flip sprite
+        if (Mathf.Abs(moveDir) > 0.01f)
             sr.flipX = moveDir > 0;
     }
 
@@ -101,6 +114,7 @@ public class PatrolWithTriggers : MonoBehaviour
     private IEnumerator WaitThenNextPoint()
     {
         waiting = true;
+        rb.linearVelocity = new Vector2(0, rb.linearVelocity.y); // Stop moving while waiting
         yield return new WaitForSeconds(1f);
         currentPointIndex = (currentPointIndex + 1) % patrolPoints.Length;
         waiting = false;

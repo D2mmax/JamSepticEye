@@ -22,6 +22,13 @@ public class GunEnemyController : MonoBehaviour
     public Transform firePoint;
     public float bulletSpeed = 10f;
 
+    [Header("Animation")]
+    public Animator animator; // Assign in inspector
+    private const string IsMovingParam = "isMoving";
+
+    [Header("AI Reference")]
+    public PatrolWithTriggers aiScript; // Assign AI script in inspector
+
     private Rigidbody2D rb;
     private PossessableEnemy possessable;
     private SpriteRenderer spriteRenderer;
@@ -37,18 +44,24 @@ public class GunEnemyController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         possessable = GetComponent<PossessableEnemy>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (animator == null)
+            animator = GetComponent<Animator>();
     }
 
     void Update()
+{
+    if (possessable.IsPossessed)
     {
-        if (!possessable.IsPossessed) return;
-
         HandleMovement();
         HandleJump();
         HandleShooting();
-        HandleFlipping();
         HandleInteract();
     }
+
+    UpdateAnimation();   // <-- Always update animation
+    HandleFlipping();    // <-- Always update flipping
+}
 
     void FixedUpdate()
     {
@@ -65,6 +78,32 @@ public class GunEnemyController : MonoBehaviour
         Vector2 vel = rb.linearVelocity;
         vel.x = move * moveSpeed;
         rb.linearVelocity = vel;
+    }
+
+   private void UpdateAnimation()
+{
+    if (spriteRenderer == null || animator == null) return;
+
+    // Consider moving if velocity.x is above threshold
+    bool isMoving = Mathf.Abs(rb.linearVelocity.x) > 0.1f;
+    animator.SetBool("isMoving", isMoving);
+}
+
+    private void HandleFlipping()
+    {
+        if (spriteRenderer == null) return;
+
+        float horizontalSpeed = 0f;
+
+        if (possessable.IsPossessed)
+            horizontalSpeed = rb.linearVelocity.x;
+        else if (aiScript != null)
+            horizontalSpeed = (aiScript.patrolPoints.Length > 0)
+                ? Mathf.Sign(aiScript.patrolPoints[aiScript.currentPointIndex].position.x - transform.position.x) * aiScript.moveSpeed
+                : 0f;
+
+        if (Mathf.Abs(horizontalSpeed) > 0.1f)
+            spriteRenderer.flipX = horizontalSpeed > 0f;
     }
 
     private void HandleJump()
@@ -105,23 +144,6 @@ public class GunEnemyController : MonoBehaviour
             GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
             Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
             bulletRb.linearVelocity = direction * bulletSpeed;
-        }
-    }
-
-    private void HandleFlipping()
-    {
-        if (spriteRenderer == null) return;
-
-        float moveX = Input.GetAxisRaw("Horizontal");
-
-        if (Mathf.Abs(moveX) > 0.1f)
-        {
-            spriteRenderer.flipX = moveX > 0f; // movement flip
-        }
-        else
-        {
-            Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            spriteRenderer.flipX = mouseWorld.x > transform.position.x; // mouse aim flip
         }
     }
 

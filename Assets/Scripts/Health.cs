@@ -17,16 +17,22 @@ public class Health : MonoBehaviour
     }
 
     public void TakeDamage(float amount)
-    {
-        currentHealth = Mathf.Clamp(currentHealth - amount, 0, maxHealth);
-        if (currentHealth <= 0)
-        {
-            // Detach the eye if this enemy is being possessed
-            DetachEye();
+{
+    currentHealth = Mathf.Clamp(currentHealth - amount, 0, maxHealth);
 
-            onDeath?.Invoke();
-        }
+    // Notify the eye that it took damage (for passive healing)
+    if (eyePossession != null)
+    {
+        eyePossession.NotifyDamageTaken();
     }
+
+    
+
+    if (currentHealth <= 0)
+    {
+        onDeath?.Invoke();
+    }
+}
 
     public void Heal(float amount)
     {
