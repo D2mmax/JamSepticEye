@@ -144,6 +144,7 @@ public class GunEnemyController : MonoBehaviour
             GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
             Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
             bulletRb.linearVelocity = direction * bulletSpeed;
+            SoundManager.PlaySound(SoundType.GUNSHOT);
         }
     }
 
