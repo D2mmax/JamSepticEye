@@ -87153,7 +87153,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: MainMenu
+          m_StringArgument: Win
           m_BoolArgument: 0
         m_CallState: 2
   onFightStarted:
@@ -87271,7 +87271,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 1836490684845144351, guid: 6da4c86178fbce647b162364bad1339f, type: 3}
-  m_Color: {r: 0.9245283, g: 0.07413671, b: 0.07413671, a: 1}
+  m_Color: {r: 0.9811321, g: 0.11569952, b: 0.11569952, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
