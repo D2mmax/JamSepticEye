@@ -77,6 +77,7 @@ public class PatrolWithTriggers : MonoBehaviour
 
         Vector2 dir = (player.position - firePoint.position).normalized;
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+        SoundManager.PlaySound(SoundType.GUNSHOT);
         Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
         if (bulletRb != null)
             bulletRb.linearVelocity = dir * bulletSpeed;

@@ -135,6 +135,7 @@ public class EyePossession : MonoBehaviour
         hostHealthBar.gameObject.SetActive(true);
         hostHealthBar.SetTarget(enemy.GetComponent<Health>());
         Camera.main.GetComponent<CameraFollow>().SetTarget(enemy.transform);
+        SoundManager.PlaySound(SoundType.ENTERPOSSESSION);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -193,6 +194,7 @@ public class EyePossession : MonoBehaviour
         hostHealthBar.gameObject.SetActive(false);
 
         Camera.main.GetComponent<CameraFollow>().SetTarget(this.transform);
+        SoundManager.PlaySound(SoundType.EXITPOSSESSION);
     }
 
     void LateUpdate()
