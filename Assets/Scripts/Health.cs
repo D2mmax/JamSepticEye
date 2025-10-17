@@ -1,11 +1,14 @@
 using UnityEngine;
 using UnityEngine.Events;
+using System.Collections;
 
 public class Health : MonoBehaviour
 {
+    [Header("Health Settings")]
     public float maxHealth = 100f;
     public float currentHealth;
 
+    [Header("Events")]
     public UnityEvent onDeath;
 
     [Header("Eye Possession")]
@@ -17,22 +20,20 @@ public class Health : MonoBehaviour
     }
 
     public void TakeDamage(float amount)
-{
-    currentHealth = Mathf.Clamp(currentHealth - amount, 0, maxHealth);
-
-    // Notify the eye that it took damage (for passive healing)
-    if (eyePossession != null)
     {
-        eyePossession.NotifyDamageTaken();
-    }
+        currentHealth = Mathf.Clamp(currentHealth - amount, 0, maxHealth);
 
-    
+        // Notify the Eye if this object is being possessed
+        if (eyePossession != null)
+        {
+            eyePossession.NotifyDamageTaken();
+        }
 
-    if (currentHealth <= 0)
-    {
-        onDeath?.Invoke();
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
     }
-}
 
     public void Heal(float amount)
     {
@@ -41,16 +42,25 @@ public class Health : MonoBehaviour
 
     public float NormalizedHealth => currentHealth / maxHealth;
 
-    public void DetachEye()
-{
-    // Only detach if eyePossession exists and it is possessing this exact enemy
-    if (eyePossession != null && eyePossession.IsPossessing() && eyePossession.IsPossessingEnemy(this.gameObject))
+    private void Die()
     {
-        // Detach the eye so it won't be affected by enemy's inactive state
-        eyePossession.transform.SetParent(null);
+        // Run any death events (for sounds, particles, etc.)
+        onDeath?.Invoke();
 
-        // Stop possessing this enemy
-        eyePossession.Release();
+        // Always safely detach the Eye before disabling the enemy
+        if (eyePossession != null && eyePossession.IsPossessing() && eyePossession.IsPossessingEnemy(this.gameObject))
+        {
+            eyePossession.transform.SetParent(null);
+            eyePossession.Release();
+        }
+
+        // Finally, deactivate the enemy after a short delay
+        StartCoroutine(DeactivateAfterDelay(0.1f));
     }
-}
+
+    private IEnumerator DeactivateAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        gameObject.SetActive(false);
+    }
 }
