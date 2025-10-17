@@ -394,6 +394,8 @@ MonoBehaviour:
   bulletPrefab: {fileID: 5632940758511014394, guid: 870f40dcd0cb02b4e9fa31f2929a61c8, type: 3}
   firePoint: {fileID: 2771606230461156865}
   bulletSpeed: 10
+  animator: {fileID: 0}
+  aiScript: {fileID: 0}
 --- !u!114 &5977160373145164642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -423,31 +425,7 @@ MonoBehaviour:
   currentHealth: 0
   onDeath:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 880738562041103835}
-        m_TargetAssemblyTypeName: Health, Assembly-CSharp
-        m_MethodName: DetachEye
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 5490075094619996370}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   eyePossession: {fileID: 0}
 --- !u!114 &5035522025461938561
 MonoBehaviour:
@@ -465,6 +443,7 @@ MonoBehaviour:
   patrolPoints:
   - {fileID: 0}
   - {fileID: 0}
+  currentPointIndex: 0
   detectionZone: {fileID: 7347091434179782736}
   playerTag: Player
   minDistance: 4
